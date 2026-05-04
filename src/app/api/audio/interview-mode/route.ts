@@ -1,39 +1,39 @@
 import { getAIClient } from "@/ai";
-import { Voice } from "@/types/voice";
 import { NextRequest, NextResponse } from "next/server";
 
-import { randomUUID } from "crypto";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import { slugify_with_underscores } from "@/lib/helpers";
+import { interviewModeBodySchema } from "@/app/schema/interview-mode.schema";
 
-const interviewerVoice: Voice = "nova";
-const intervieweeVoice: Voice = "ballad";
-const interviewerInput = "Why the Netherlands?";
-const intervieweeInput = `We chose the Netherlands...
-because it has a strong combination of demand,
-structure,
-and fragmentation.`;
-const interviewerInstruction = `You are the interviewer in a realistic interview-style podcast.
 
-Voice direction:
-- Calm, professional, slightly curious
-- Ask the question naturally
-- Keep the delivery clear and moderate
-- Do not sound robotic
-- Add a slight pause at the end of the question`;
-
-const intervieweeInstruction = `You are the founder in a realistic interview-style podcast.
-
-Voice direction:
-- Confident, clear, thoughtful
-- Answer in a structured but conversational way
-- Keep the pacing moderate
-- Do not rush
-- Add slight pauses between key ideas
-- Sound natural, not robotic`;
 
 export async function POST(req: NextRequest) {
   try {
+    const body = await req.json();
+    const validationResult = interviewModeBodySchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid request body",
+          issues: validationResult.error.flatten().fieldErrors,
+        },
+        { status: 400 },
+      );
+    }
+
+    const {
+      interviewerVoice,
+      intervieweeVoice,
+      interviewerInput,
+      intervieweeInput,
+      fileName,
+      interviewerInstruction,
+      intervieweeInstruction,
+    } = validationResult.data;
+
     // get AI client
     const aiClient = getAIClient();
 
@@ -73,12 +73,18 @@ export async function POST(req: NextRequest) {
     const outputDir = path.join(process.cwd(), "public", "generated");
     await mkdir(outputDir, { recursive: true });
 
-    const fileName = `askfund-interview-${randomUUID()}.mp3`;
-    const filePath = path.join(outputDir, fileName);
+    const baseName = fileName && fileName.length > 0
+      ? fileName
+      : interviewerInput;
+
+    const safeFileName = slugify_with_underscores(baseName).slice(0, 120);
+    const finalFileName = `${safeFileName}.mp3`;
+
+    const filePath = path.join(outputDir, finalFileName);
 
     await writeFile(filePath, mergedAudioBuffer);
 
-    const downloadLink = `/generated/${fileName}`;
+    const downloadLink = `/generated/${finalFileName}`;
 
     return NextResponse.json({
       success: true,
