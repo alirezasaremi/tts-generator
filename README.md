@@ -1,8 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🎙️ TTS Generator
 
-First, run the development server:
+[![GitHub stars](https://img.shields.io/github/stars/alirezasaremi/tts-generator?style=social)](https://github.com/alirezasaremi/tts-generator)
+[![GitHub forks](https://img.shields.io/github/forks/alirezasaremi/tts-generator?style=social)](https://github.com/alirezasaremi/tts-generator)
+[![GitHub issues](https://img.shields.io/github/issues/alirezasaremi/tts-generator)](https://github.com/alirezasaremi/tts-generator/issues)
+[![License](https://img.shields.io/github/license/alirezasaremi/tts-generator)](https://github.com/alirezasaremi/tts-generator)
+
+## 🧠 About
+
+**TTS Generator** is an open-source app that helps you convert text into high-quality audio using AI.
+
+You can use it to generate:
+
+- 🎧 Podcasts
+- 🎤 Mock interviews
+- 📖 Stories
+- 🧠 Learning content
+
+Built with Next.js and powered by OpenAI TTS models.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/alirezasaremi/tts-generator.git
+cd tts-generator
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+```
+
+### 3. Setup environment variables
+
+Rename the example file:
+
+```bash
+cp env.example .env
+```
+
+Then update the values inside `.env`:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_TTS_MODEL=gpt-4o-mini-tts
+```
+
+---
+
+### 4. Run the development server
 
 ```bash
 npm run dev
@@ -10,27 +65,36 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
+👉 http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+- Next.js (App Router)
+- TypeScript
+- OpenAI TTS (gpt-4o-mini-tts)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Multi-voice generation (Interviewer / Interviewee)
+- Podcast-style audio output
+- MP3 generation and download
+- Simple API-based architecture
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Feel free to open issues or submit PRs.
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
